@@ -20,7 +20,7 @@ Engine: `/home/zerker24/BeefProjects/Tessera`
 - Added `src/Input.tinput` and mobile-only touch controls (move stick, Use, Chop, Run, Menu). Desktop browsers/native players keep keyboard/mouse without a touch overlay. Separate mobile menu/settings/results/HUD documents keep touch targets usable.
 - Corrected the requested layout: only delivery and customers remain on the right; the two spare assembly counters are back at the bottom.
 - `tools/build_web.sh --setup` and `.github/workflows/web-build.yml` prepare/build/validate a real WebAssembly player. See `docs/WEB.md`.
-- Local setup failed downloading Emscripten because this session cannot resolve github.com. No web binary or ZIP has been produced. The browser/physical-device test remains pending.
+- The user completed toolchain setup and the web build. `Builds/BistroBlitz-Web/` and its ZIP pass package validation. The landing page in `docs/index.html` stages with the browser player under `play/`; the workflow publishes the repository Pages site. Browser/physical-device playtesting remains pending.
 - Local touch tests cover simultaneous finger ownership and independent button release at landscape phone, portrait phone and tablet sizes. The desktop overlay stays hidden. Every desktop/mobile UI document parses.
 
 ## Validation
@@ -35,8 +35,10 @@ The deterministic self-test exercises the loaded scene: crates, cooking, assembl
 
 Visual/audio playtesting remains pending: `xdpyinfo` works in the user's desktop terminal but fails inside this session; SDL cannot access X11 here. Offscreen SDL also cannot create a graphics device. The user reported visibility/text/white-model issues; these prompted the art, contextual prompt and missing-palette fixes, but a final screenshot has not been reviewed. Live networking could not be verified here: UDP hosting reports that it cannot open the port. Windows builds and cross-account Steam testing require CI/desktop environments.
 
-## GitHub and Hub remaining
+## GitHub, Hub and site
 
-The shell cannot reach/authenticate to GitHub. `tools/setup_github.sh` stops at `gh auth status`. No remote repository or public release has been created by this session, and the live Hub catalog has not been changed. The connected GitHub app returned 404 for `LazyAlgorithm/BistroBlitz` and exposes no repository-creation action.
+Private source is published to `LazyAlgorithm/BistroBlitz`. The first Hub release workflow completed successfully: both Windows and Linux standalone packages passed checks and are published to `LazyAlgorithm/bistro-blitz-releases` under tag `bistro-blitz-2026.10.18-065644-ea0c500`. The live `LazyAlgorithm/tessera-hub` catalog contains BistroBlitz with both platform assets and launch paths.
 
-Run `tools/setup_github.sh` from an authenticated desktop shell to create private `LazyAlgorithm/BistroBlitz`, public runtime-only `LazyAlgorithm/bistro-blitz-releases`, configure `HUB_RELEASE_TOKEN`, and push. The workflow publishes only after Windows and Linux packaged checks pass, then updates the live Hub catalog and starts its self-update. See `docs/RELEASING.md`.
+The repository landing page and Pages deployment are being added to the web workflow. Expected page: `https://lazyalgorithm.github.io/BistroBlitz/`. The page links to the browser game and resolves current Windows/Linux release assets, including beta releases. Pages deployment must succeed before the browser link is considered live.
+
+The shell still cannot resolve GitHub, but the connected GitHub tools can read/write the repositories. See `docs/WEB.md` and `docs/RELEASING.md`.

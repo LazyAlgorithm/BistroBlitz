@@ -1,5 +1,7 @@
 # Bistro Blitz
 
+[Play in browser](https://lazyalgorithm.github.io/BistroBlitz/) · [Windows and Linux downloads](https://github.com/LazyAlgorithm/bistro-blitz-releases/releases)
+
 A Tessera cooperative kitchen beta. Cook and assemble burgers, hot dogs and salads, serve timed orders, and build combos during a three-minute service. Numbered customers arrive, wait for their tickets, and react to service.
 
 Run `./run.sh` for the menu or `./run.sh --solo --windowed` to play locally. The kitchen has a fixed overhead camera, bright tiles, color coded stations, ingredient displays, small progress bars, customer badges and contextual interaction prompts. Use `--host --direct` or `--connect 127.0.0.1` for direct networking. Steam uses test App ID 480.

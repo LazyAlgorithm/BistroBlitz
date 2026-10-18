@@ -17,16 +17,16 @@ Serve the build over HTTP, rather than opening the HTML directly:
 python3 -m http.server 8080 --directory Builds/BistroBlitz-Web
 ```
 
-Open `http://localhost:8080/` on the desktop. For a phone/tablet on the same network, open the computer's LAN address on port 8080. Landscape gives the largest view. No hosting has been published by this session.
+Open `http://localhost:8080/` on the desktop. For a phone/tablet on the same network, open the computer's LAN address on port 8080. Landscape gives the largest view. The repository page is deployed by the web workflow at `https://lazyalgorithm.github.io/BistroBlitz/`; its Play button opens the packaged game in `play/`.
 
 Desktop browsers use WASD/arrows, E, F/Space and Escape, with no touch overlay. Only mobile browser versions show the movement stick, USE, CHOP, RUN and MENU buttons. USE picks up, places, combines or delivers; hold CHOP to prepare food; hold RUN while moving to sprint. Mobile menus and HUD use separate UI documents. Menu taps do not trigger gameplay actions, and synthetic touch mouse presses do not accidentally pick up food when chopping.
 
-The `web-build.yml` GitHub Actions workflow builds and retains a `BistroBlitz-Web` ZIP artifact using the same toolchain setup as Polystrike. It does not deploy a public web site. The existing Hub workflow still publishes the standalone Windows/Linux players and updates the Hub only after their packaged checks pass.
+The `web-build.yml` GitHub Actions workflow builds and retains a `BistroBlitz-Web` ZIP artifact using the same toolchain setup as Polystrike. It stages `docs/index.html` as the landing page and the validated player under `play/`, then deploys to GitHub Pages using the `github-pages` environment. Source stays in the private repository. The workflow runs on game/build/page changes on main and supports manual dispatch. The existing Hub workflow still publishes the standalone Windows/Linux players and updates the Hub only after their packaged checks pass.
 
 ## Current validation
 
 Native compilation and deterministic tests pass, including real touch-control finger ownership, simultaneous move/use/chop, independent release, and three phone/tablet viewport shapes. Desktop and mobile UI documents load through Tessera's parser. The desktop overlay is verified hidden.
 
-A WebAssembly build has **not** completed in this session: Emscripten and native web libraries are absent, and setup fails with `Could not resolve host: github.com`. Browser runtime and physical-device touch testing remain pending until setup/build can run in a network-enabled environment. The GitHub workflows are prepared but have not run.
+The user completed toolchain setup and built the WebAssembly player in `Builds/BistroBlitz-Web/`. Its loader, WebAssembly header, packed assets and manifest passed validation, and the complete Pages site stages successfully. Browser runtime and physical-device touch testing remain pending. The new Pages workflow deployment is tracked in GitHub Actions.
 
 Browser-local saving is supported by Tessera's IndexedDB filesystem, but BistroBlitz currently does not persist gameplay or settings.

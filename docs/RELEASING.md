@@ -16,4 +16,4 @@ python3 tools/package_release.py --platform linux --package Builds/BistroBlitz-L
 
 Steam uses development App ID 480. Included runtime libraries match those used by the other local games. Live Steam, audio playback, visual testing, and Windows testing need their respective desktop/CI environments.
 
-The setup script also dispatches `web-build.yml`, which retains a web player ZIP as an Actions artifact. It does not publish a web site. See [WEB.md](WEB.md) for local build/setup and mobile controls.
+The setup script also dispatches `web-build.yml`, which retains a web player ZIP as an Actions artifact. It also stages the repository landing page and deploys the browser build with GitHub Pages. See [WEB.md](WEB.md) for local build/setup and mobile controls.
