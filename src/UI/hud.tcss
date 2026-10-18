@@ -1,0 +1,18 @@
+#hud { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none }
+
+#orderBar { position: absolute; left: 40; top: 30; flex-direction: row; gap: 18 }
+.ticket { width: 260; height: 142; background-color: #fff9eef2; border-width: 2; border-color: #d97838; border-radius: 6; padding: 12 16 }
+.ticketText { font-size: 19; color: #2e1d0f; height: 86 }
+
+#scorePanel { position: absolute; right: 40; top: 30; width: 340; padding: 16 20; background-color: #1a130df2; border-width: 2; border-color: #e06030; border-radius: 6; gap: 6 }
+#scoreValue { font-size: 32; color: #ffebcc; text-align: right; height: 38 }
+#clockValue { font-size: 38; color: #ffdc73; text-align: right; height: 44 }
+#comboValue { font-size: 24; color: #ff5e36; text-align: right; height: 28 }
+
+#actionPrompt { position: absolute; left: 360; bottom: 30; width: 1200; height: 86; gap: 6; background-color: #1a130de8; border-width: 1; border-color: #614a38; border-radius: 6; padding: 10 24 }
+#promptText { font-size: 20; color: #ffebcc; text-align: center; height: 30 }
+
+.customerNumber { font-size: 16; height: 20; color: #8a391e }
+#stationPrompt { font-size: 19; height: 30; color: #ffe198; text-align: center }
+
+.body, #description, .ticketText { white-space: normal }

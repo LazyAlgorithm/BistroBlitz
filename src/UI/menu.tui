@@ -1,0 +1,27 @@
+<panel id="screen">
+  <panel class="previewBackdrop" />
+  <text id="topline" />
+  <text id="brand">BISTRO BLITZ</text>
+  <text id="connection" bind="connectionLabel" />
+  <panel id="divider" />
+
+  <text id="heading">BISTRO
+BLITZ</text>
+  <text id="description">Collect on the left. Cook at red stoves. Assemble on blue counters. Serve your waiting customers!</text>
+
+  <panel id="mainEntries">
+    <button class="mainEntry" id="resumeEntry" onclick="OnResume">RESUME SERVICE</button>
+    <button class="mainEntry" id="leaveEntry" onclick="OnLeave">LEAVE KITCHEN</button>
+    <button class="mainEntry" id="inviteEntry" onclick="OnInviteFriends">INVITE FRIENDS</button>
+    <button class="mainEntry primary" onclick="OnQuickPlay">QUICK PLAY (SOLO)</button>
+    <button class="mainEntry" onclick="OnHostMenu">HOST KITCHEN</button>
+    <button class="mainEntry" onclick="OnJoinMenu">JOIN KITCHEN</button>
+    <button class="mainEntry" onclick="OnFriendsMenu">STEAM CHEFS</button>
+    <button class="mainEntry" onclick="OnSettingsMenu">SETTINGS</button>
+    <button class="mainEntry quiet" onclick="OnQuit">QUIT</button>
+  </panel>
+
+  <panel id="footerline" />
+  <text id="notice" bind="notice" />
+  <text id="version">Bistro Blitz v1.0 • Tessera Engine</text>
+</panel>

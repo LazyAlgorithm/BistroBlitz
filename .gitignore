@@ -1,0 +1,8 @@
+build/
+Builds/
+.tessera-reload/
+Validation/*.log
+*.log
+__pycache__/
+*.pyc
+core

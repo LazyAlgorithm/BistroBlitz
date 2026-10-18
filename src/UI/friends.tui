@@ -1,0 +1,39 @@
+<panel id="screen">
+  <panel class="backdrop" />
+  <text id="topline" />
+  <text id="brand">BISTRO BLITZ</text>
+  <text id="connection" bind="connectionLabel" />
+  <panel id="divider" />
+
+  <text id="heading">STEAM CHEFS</text>
+  <text id="description">Cook with your Steam friends. Invite them or join their active bistro.</text>
+
+  <panel id="friendsList" class="surface">
+    <text class="section" bind="friendBrowserTitle" />
+    <text class="small" bind="friendBrowserStatus" />
+    <panel id="friendRows">
+      <button id="friend0" class="friendRow" onclick="OnFriendSelected" />
+      <button id="friend1" class="friendRow" onclick="OnFriendSelected" />
+      <button id="friend2" class="friendRow" onclick="OnFriendSelected" />
+      <button id="friend3" class="friendRow" onclick="OnFriendSelected" />
+      <button id="friend4" class="friendRow" onclick="OnFriendSelected" />
+      <button id="friend5" class="friendRow" onclick="OnFriendSelected" />
+    </panel>
+    <panel class="row">
+      <button class="pageBtn" onclick="OnPreviousFriends">PREV</button>
+      <button class="pageBtn" onclick="OnNextFriends">NEXT</button>
+      <button class="pageBtn" onclick="OnRefreshFriends">REFRESH</button>
+    </panel>
+  </panel>
+
+  <panel id="friendActionPanel" class="surface">
+    <text class="section" bind="friendSelectedName" />
+    <text class="body" bind="friendHelp" />
+    <button class="primary" bind="friendActionLabel" onclick="OnFriendAction" />
+  </panel>
+
+  <panel id="footerline" />
+  <button id="back" class="quiet" onclick="OnBack">BACK</button>
+  <text id="notice" bind="notice" />
+  <text id="version">Bistro Blitz v1.0 • Tessera Engine</text>
+</panel>

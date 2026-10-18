@@ -1,0 +1,31 @@
+<panel id="screen">
+  <panel class="backdrop" />
+  <text id="topline" />
+  <text id="brand">BISTRO BLITZ</text>
+  <text id="connection" bind="connectionLabel" />
+  <panel id="divider" />
+
+  <text id="heading">JOIN KITCHEN</text>
+  <text id="description">Connect to an open bistro session via IP address or Steam friend lobby.</text>
+
+  <panel id="joinDirect" class="surface">
+    <text class="section">DIRECT IP CONNECTION</text>
+    <text class="body">Enter the host's IP address and port to connect straight into their kitchen arena.</text>
+    <text class="label">HOST IP ADDRESS:</text>
+    <input id="addressInput" class="textInput" bind="address" onchange="OnAddressChanged" />
+    <text class="label">PORT:</text>
+    <input id="portInput" class="textInput" bind="portText" onchange="OnPortChanged" />
+    <button class="primary" onclick="OnJoin">CONNECT TO KITCHEN</button>
+  </panel>
+
+  <panel id="joinSteam" class="surface">
+    <text class="section">STEAM CHEFS</text>
+    <text class="body">Looking for a friend's active kitchen? Browse your Steam friends list directly.</text>
+    <button onclick="OnFriendsMenu">BROWSE STEAM FRIENDS</button>
+  </panel>
+
+  <panel id="footerline" />
+  <button id="back" class="quiet" onclick="OnBack">BACK</button>
+  <text id="notice" bind="notice" />
+  <text id="version">Bistro Blitz v1.0 • Tessera Engine</text>
+</panel>

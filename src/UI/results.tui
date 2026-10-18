@@ -1,0 +1,12 @@
+<panel id="screen">
+  <panel class="backdrop" />
+  <text id="brand">BISTRO BLITZ</text>
+  <panel id="resultsPanel" class="surface">
+    <text class="section" bind="resultsTitle" />
+    <text class="value" bind="resultsStars" />
+    <text class="accent" bind="resultsScore" />
+    <text class="body" bind="resultsDetail" />
+    <button class="primary" onclick="OnRestartGame">COOK AGAIN (HOST / SOLO)</button>
+    <button onclick="OnLeave">RETURN TO MENU</button>
+  </panel>
+</panel>

@@ -1,0 +1,12 @@
+object 1 parent 0 active 1 name "Player"
+transform 0 0.2 -2 0 0 0 1 1 1 1
+component Tessera.CharacterController enabled 1
+field radius 0.35
+field height 1.6
+field center 0 0.8 0
+field stepHeight 0.3
+field maxSlope 45
+component BistroBlitz.Player enabled 1
+field mouseLook 0
+field holdRightMouseToLook 0
+component Tessera.NetworkIdentity enabled 1

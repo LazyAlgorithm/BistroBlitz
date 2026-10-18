@@ -1,0 +1,32 @@
+<panel id="screen">
+  <panel class="backdrop" />
+  <text id="topline" />
+  <text id="brand">BISTRO BLITZ</text>
+  <text id="connection" bind="connectionLabel" />
+  <panel id="divider" />
+
+  <text id="heading">SETTINGS</text>
+  <text id="description">Configure kitchen camera perspective, display mode, and audio mix.</text>
+
+  <panel id="displaySettings" class="surface">
+    <text class="section">DISPLAY & CAMERA</text>
+    <text class="label">CAMERA VIEW WIDTH:</text>
+    <slider class="slider" bind="fieldOfView" min="40" max="90" onchange="OnFov" />
+    <button class="primary" onclick="OnFullscreen">TOGGLE FULLSCREEN</button>
+  </panel>
+
+  <panel id="audioSettings" class="surface">
+    <text class="section">AUDIO MIX</text>
+    <text class="label">MASTER VOLUME:</text>
+    <slider class="slider" bind="masterVolume" min="0" max="1" onchange="OnMasterVolume" />
+    <text class="label">MUSIC VOLUME:</text>
+    <slider class="slider" bind="musicVolume" min="0" max="1" onchange="OnMusicVolume" />
+    <text class="label">SOUND EFFECTS:</text>
+    <slider class="slider" bind="effectsVolume" min="0" max="1" onchange="OnEffectsVolume" />
+  </panel>
+
+  <panel id="footerline" />
+  <button id="back" class="quiet" onclick="OnBack">BACK</button>
+  <text id="notice" bind="notice" />
+  <text id="version">Bistro Blitz v1.0 • Tessera Engine</text>
+</panel>

@@ -1,0 +1,8 @@
+name = BistroBlitz
+startScene = Scenes/Main.tscene
+engine = /home/zerker24/BeefProjects/Tessera
+windowWidth = 1600
+windowHeight = 900
+fullscreen = 1
+escapeQuits = 0
+steamAppId = 480

@@ -1,0 +1,105 @@
+name: Bistro Blitz Hub release
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['STATUS.md', 'docs/**', 'Validation/**', '**/*.md']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: bistro-blitz-hub-release
+  cancel-in-progress: true
+env:
+  ENGINE_RELEASE: build-20261016-3d0fcc7
+jobs:
+  staging:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Prepare private package staging
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "ci-${{ github.run_id }}" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "Private build staging ${{ github.run_id }}" --notes 'Temporary tested runtime packages. Public publication waits for both platforms.' --draft
+  build:
+    needs: staging
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            platform: linux
+            title: Linux
+          - os: windows-2022
+            platform: windows
+            title: Windows
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PYTHONUTF8: '1'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: game
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Windows compiler environment
+        if: matrix.platform == 'windows'
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+      - name: Linux prerequisites
+        if: matrix.platform == 'linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libx11-dev libgl-dev libffi-dev zlib1g-dev libzstd-dev libxml2-dev libedit-dev
+      - name: Download verified engine and compiler
+        run: |
+          mkdir -p dependencies
+          gh release download "$ENGINE_RELEASE" --repo LazyAlgorithm/Tessera --pattern "Tessera-${{ matrix.title }}.zip" --pattern SHA256SUMS.txt --dir dependencies
+          (cd dependencies && grep "Tessera-${{ matrix.title }}.zip" SHA256SUMS.txt | sha256sum -c -)
+          if [ '${{ matrix.platform }}' = linux ]; then
+            unzip -q dependencies/Tessera-Linux.zip -d "$RUNNER_TEMP"
+            gh release download toolchain-2 --repo LazyAlgorithm/Tessera --pattern beef-linux-x64.tar.gz --dir dependencies
+            tar -xzf dependencies/beef-linux-x64.tar.gz -C "$RUNNER_TEMP"
+            echo "BEEFBUILD=$RUNNER_TEMP/beef/IDE/dist/BeefBuild.sh" >> "$GITHUB_ENV"
+          else
+            7z x -y dependencies/Tessera-Windows.zip "-o$RUNNER_TEMP" > /dev/null
+            gh release download toolchain-2 --repo LazyAlgorithm/Tessera --pattern beef-windows-x64.zip --dir dependencies
+            7z x -y dependencies/beef-windows-x64.zip "-o$RUNNER_TEMP" > /dev/null
+            echo "BEEFBUILD=$(cygpath -w "$RUNNER_TEMP/beef/bin/BeefBuild.exe")" >> "$GITHUB_ENV"
+          fi
+      - name: Build standalone player
+        run: python "$RUNNER_TEMP/Tessera-${{ matrix.title }}/tools/build_player.py" game --platform '${{ matrix.platform }}' --config Release --output "out/BistroBlitz-${{ matrix.title }}" --fullscreen
+      - name: Package branding and validate native player
+        run: python game/tools/package_release.py --platform '${{ matrix.platform }}' --package "out/BistroBlitz-${{ matrix.title }}"
+      - name: Archive tested player
+        run: python game/tools/package_release.py --platform '${{ matrix.platform }}' --package "out/BistroBlitz-${{ matrix.title }}" --archive-only
+      - name: Stage tested ZIP privately
+        run: gh release upload "ci-${{ github.run_id }}" "out/BistroBlitz-${{ matrix.title }}.zip" --repo "$GITHUB_REPOSITORY" --clobber
+  release:
+    needs: build
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: game
+      - name: Download validated private packages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release download "ci-${{ github.run_id }}" --repo "$GITHUB_REPOSITORY" --pattern 'BistroBlitz-*.zip' --dir out
+      - name: Publish public player packages
+        env:
+          GH_TOKEN: ${{ secrets.HUB_RELEASE_TOKEN }}
+        run: python game/tools/publish_release.py --packages out --source "$GITHUB_SHA" --engine "$ENGINE_RELEASE"
+      - name: Refresh Hub catalog and build its self-update
+        env:
+          GH_TOKEN: ${{ secrets.HUB_RELEASE_TOKEN }}
+        run: python game/tools/start_hub_update.py
+      - name: Remove successful private staging
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release delete "ci-${{ github.run_id }}" --repo "$GITHUB_REPOSITORY" --yes

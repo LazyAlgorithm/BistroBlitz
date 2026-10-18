@@ -1,0 +1,19 @@
+<panel id="hud">
+  <panel id="orderBar">
+    <panel id="order0" class="ticket"><text class="customerNumber">CUSTOMER 1</text><text class="ticketText" bind="order0Text" /></panel>
+    <panel id="order1" class="ticket"><text class="customerNumber">CUSTOMER 2</text><text class="ticketText" bind="order1Text" /></panel>
+    <panel id="order2" class="ticket"><text class="customerNumber">CUSTOMER 3</text><text class="ticketText" bind="order2Text" /></panel>
+    <panel id="order3" class="ticket"><text class="customerNumber">CUSTOMER 4</text><text class="ticketText" bind="order3Text" /></panel>
+  </panel>
+
+  <panel id="scorePanel">
+    <text id="scoreValue" bind="hudScore" />
+    <text id="clockValue" bind="hudTimer" />
+    <text id="comboValue" bind="hudCombo" />
+  </panel>
+
+  <panel id="actionPrompt">
+    <text id="promptText" bind="hudHeldItem" />
+    <text id="stationPrompt" bind="hudNotice" />
+  </panel>
+</panel>

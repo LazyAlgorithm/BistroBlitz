@@ -1,0 +1,31 @@
+#screen { position: absolute; left: 0; top: 0; width: 100%; height: 100% }
+.backdrop { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background-color: #12100df8 }
+#topline { position: absolute; left: 0; top: 0; width: 100%; height: 4; background-color: #e06030 }
+#brand { position: absolute; left: 88; top: 40; font-size: 26; color: #ffebcc }
+#connection { position: absolute; right: 88; top: 44; width: 900; text-align: right; font-size: 18; color: #c4ab80 }
+#divider { position: absolute; left: 88; top: 96; width: 1744; height: 1; background-color: #ffffff20 }
+#heading { position: absolute; left: 88; top: 140; font-size: 64; height: 80; color: #fff5e6 }
+#description { position: absolute; left: 92; top: 230; font-size: 22; height: 36; color: #d6be9c }
+#footerline { position: absolute; left: 88; bottom: 85; width: 1744; height: 1; background-color: #ffffff20 }
+#back { position: absolute; left: 88; bottom: 25; width: 180; height: 50; font-size: 20 }
+#notice { position: absolute; left: 300; bottom: 32; width: 1100; height: 32; font-size: 21; color: #ffc97a }
+#version { position: absolute; right: 88; bottom: 34; width: 450; text-align: right; font-size: 17; color: #8c7b64 }
+
+#joinDirect { position: absolute; left: 88; top: 290; width: 820; height: 500 }
+#joinSteam { position: absolute; left: 950; top: 290; width: 820; height: 500 }
+
+button { width: 380; height: 58; font-size: 20; padding: 12 24; text-align: left; color: #fff8f0; background-color: #2b221b; border-width: 1; border-color: #614a38; border-radius: 4 }
+button:hover { background-color: #423225; border-color: #d18d45; color: #ffffff }
+.primary { background-color: #d64f2a; border-color: #ff7b47; color: #ffffff }
+.primary:hover { background-color: #ea5f35; border-color: #ffa17a }
+.quiet { background-color: #ffffff0a; border-color: #ffffff20 }
+.quiet:hover { background-color: #ffffff18 }
+
+.surface { background-color: #1e1713e8; border-width: 1; border-color: #61483366; border-radius: 6; padding: 32; gap: 20 }
+.section { font-size: 26; color: #ffebcc; height: 36 }
+.body { font-size: 20; color: #e0d0be; height: 56 }
+.label { font-size: 18; color: #b8a38a; height: 26 }
+
+.textInput { width: 440; height: 54; font-size: 22; color: #ffffff; background-color: #0d0a08; border-width: 1; border-color: #59412f; padding: 12 18; border-radius: 4 }
+
+.body, #description, .ticketText { white-space: normal }

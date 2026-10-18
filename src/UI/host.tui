@@ -1,0 +1,31 @@
+<panel id="screen">
+  <panel class="backdrop" />
+  <text id="topline" />
+  <text id="brand">BISTRO BLITZ</text>
+  <text id="connection" bind="connectionLabel" />
+  <panel id="divider" />
+
+  <text id="heading">HOST KITCHEN</text>
+  <text id="description">Set up your bistro arena and invite chefs to cook together.</text>
+
+  <panel id="hostSteam" class="surface">
+    <text class="section">STEAM ONLINE MULTIPLAYER</text>
+    <text class="body">Host a peer-to-peer Steam lobby. Friends can join straight from Steam without port forwarding.</text>
+    <button class="primary" onclick="OnHost">CREATE STEAM KITCHEN</button>
+    <button onclick="OnInviteFriends">INVITE STEAM FRIENDS</button>
+    <text class="small" bind="lobbySummary" />
+  </panel>
+
+  <panel id="hostDirect" class="surface">
+    <text class="section">DIRECT IP / LAN KITCHEN</text>
+    <text class="body">Host a local kitchen directly on your network or internet port.</text>
+    <text class="label">PORT:</text>
+    <input id="portInput" class="textInput" bind="portText" onchange="OnPortChanged" />
+    <button class="primary" onclick="OnDirectHost">START DIRECT KITCHEN</button>
+  </panel>
+
+  <panel id="footerline" />
+  <button id="back" class="quiet" onclick="OnBack">BACK</button>
+  <text id="notice" bind="notice" />
+  <text id="version">Bistro Blitz v1.0 • Tessera Engine</text>
+</panel>
