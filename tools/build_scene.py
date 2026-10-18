@@ -30,8 +30,8 @@ def component(name,**fields):
   elif isinstance(value,tuple): value=' '.join(map(str,value))
   parts.append(f'field {key} {value}\n')
 
-def mesh(name,pos,scale,color,parent=0,model='builtin:cube'):
- identifier=obj(name,pos,scale,parent)
+def mesh(name,pos,scale,color,parent=0,model='builtin:cube',rotation=(0,0,0,1)):
+ identifier=obj(name,pos,scale,parent,rotation)
  fields = dict(mesh=model,color=color,roughness=0.85)
  if model.startswith('Models/'):
   data=(Path('src')/model).read_bytes()
@@ -54,9 +54,9 @@ for x in range(-8,9):
 for name,pos,scale in [('North',(0,.3,6.8),(18,.6,.3)),('South',(0,.3,-6.8),(18,.6,.3)),('West',(-8.8,.3,0),(.3,.6,14)),('East',(8.8,.3,0),(.3,.6,14))]:
  mesh('Low '+name+' wall',pos,scale,(.25,.42,.47,1));component('Tessera.BoxCollider',size=(1,1,1))
 # Uniform station roots keep physics, interaction distance and item heights consistent.
-stations=[('STOVE',-2,4.5,2),('STOVE',0,4.5,2),('STOVE',2,4.5,2),('BUN',-7,3.5,3),('PATTY',-7,2,4),('SAUSAGE',-7,.5,5),('TOMATO',-7,-1,6),('CHEESE',-7,-2.5,7),('PLATES',-7,-4,8),('ASSEMBLE',-3,0,0),('CHOP',-1,0,1),('CHOP',1,0,1),('ASSEMBLE',3,0,0),('ASSEMBLE',-2,-4.5,0),('SERVE',0,-4.5,9),('ASSEMBLE',2,-4.5,0),('TRASH',4.5,-4.5,10)]
-colors={0:(.20,.56,.68,1),1:(.19,.65,.43,1),2:(.90,.29,.16,1),3:(.94,.65,.21,1),4:(.83,.34,.42,1),5:(.69,.37,.20,1),6:(.88,.20,.19,1),7:(.96,.74,.15,1),8:(.63,.71,.82,1),9:(.12,.70,.61,1),10:(.30,.34,.43,1)}
-foods={3:('builtin:cylinder',(.58,.2,.58)),4:('Models/meat-raw.glb',(1.25,1.25,1.25)),5:('Models/hot-dog-raw.glb',(1.3,1.3,1.3)),6:('Models/tomato.glb',(3.8,3.8,3.8)),7:('Models/cheese.glb',(1.7,1.7,1.7)),8:('Models/plate.glb',(1.12,1.12,1.12))}
+stations=[('STOVE',-2,4.5,2),('STOVE',0,4.5,2),('STOVE',2,4.5,2),('BUN',-7,3.5,3),('PATTY',-7,2,4),('SAUSAGE',-7,.5,5),('TOMATO',-7,-1,6),('CHEESE',-7,-2.5,7),('ASSEMBLE',-3,0,0),('CHOP',-1,0,1),('CHOP',1,0,1),('ASSEMBLE',3,0,0),('ASSEMBLE',6.5,2,0),('SERVE',6.5,-2,9),('ASSEMBLE',6.5,0,0),('TRASH',4.5,-4.5,10)]
+colors={0:(.20,.56,.68,1),1:(.19,.65,.43,1),2:(.90,.29,.16,1),3:(.94,.65,.21,1),4:(.83,.34,.42,1),5:(.69,.37,.20,1),6:(.88,.20,.19,1),7:(.96,.74,.15,1),9:(.12,.70,.61,1),10:(.30,.34,.43,1)}
+foods={3:('builtin:cylinder',(.58,.2,.58)),4:('Models/meat-raw.glb',(1.25,1.25,1.25)),5:('Models/hot-dog-raw.glb',(1.3,1.3,1.3)),6:('Models/tomato.glb',(3.8,3.8,3.8)),7:('Models/cheese.glb',(1.7,1.7,1.7))}
 for name,x,z,kind in stations:
  root=obj(name,(x,0,z));component('Tessera.NetworkIdentity');component('BistroBlitz.KitchenStation',kind=kind);component('Tessera.BoxCollider',size=(1.35,1.05,1.25),center=(0,.525,0))
  mesh('Colored station body',(0,.45,0),(1.3,.9,1.18),(.66,.43,.25,1) if kind==0 else colors[kind],root)
@@ -74,17 +74,18 @@ for name,x,z,kind in stations:
   mesh('Knife',(.30,1.15,0),(.65,.65,.65),(1,1,1,1),root,'Models/cooking-knife.glb')
  elif kind in foods:
   model,scale=foods[kind]
-  if kind==8: mesh('Blue plate mat',(0,1.10,0),(1.2,.025,1.2),(.12,.29,.38,1),root,'builtin:cylinder')
   mesh('Ingredient display',(0,1.14,0),scale,colors[kind] if kind==3 else (1,1,1,1),root,model)
  elif kind==10:
   mesh('Kenney bin',(.0,1.07,0),(1.4,1.4,1.4),(1,1,1,1),root,'Models/trashcan.glb')
  elif kind==9:
-  mesh('Blue serving mat',(0,1.10,0),(1.2,.025,1.2),(.12,.29,.38,1),root,'builtin:cylinder')
-  mesh('Serving plate',(0,1.14,0),(1.12,1.12,1.12),(1,1,1,1),root,'Models/plate.glb')
+  mesh('Teal delivery pad',(0,1.07,0),(1.08,.06,.88),(.08,.62,.48,1),root)
+  mesh('Delivery arrow stem',(-.22,1.108,0),(.38,.02,.12),(1,.88,.30,1),root)
+  mesh('Delivery arrow upper',(.08,1.108,.09),(.29,.02,.09),(1,.88,.30,1),root,rotation=(0,.382683,0,.92388))
+  mesh('Delivery arrow lower',(.08,1.108,-.09),(.29,.02,.09),(1,.88,.30,1),root,rotation=(0,-.382683,0,.92388))
  elif kind==0:
   mesh('Kenney cabinet',(-.60,0,-.63),(2.8,2,2.8),(1,1,1,1),root,'Models/kitchenCabinet.glb')
 for i in range(4):
- mesh('Customer waiting spot',(-2.7+i*1.8,.022,-6),(1.5,.025,1.1),(.38,.62,.63,1))
+ mesh('Customer waiting spot',(8,.022,3-i*2),(1.1,.025,1.5),(.38,.62,.63,1))
 obj('SpawnPoint',(-1.8,.2,-2))
 Path('src/Scenes/Main.tscene').write_text('\n'.join(parts))
 print('Created sunny kitchen scene with',sequence,'objects.')

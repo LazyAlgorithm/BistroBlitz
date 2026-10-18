@@ -10,13 +10,13 @@ Hold F / Space / right click: Chop. Escape: Menu. Settings controls audio and fu
 Cook patties or sausages on a stove (4.5 seconds); collect before they burn (6 more seconds).
 Combine ingredients on a counter: bun + cooked patty = burger; add cheese for cheeseburger,
 then tomato for deluxe. Bun + cooked sausage = hot dog. Sliced tomato + sliced cheese = salad.
-Hold chop at a cutting board for 2 seconds. Take finished dishes to the serving hatch.
+Hold chop at a cutting board for 2 seconds. Take finished dishes directly to the teal serving hatch on the right and press E. No plates are used.
 Serve matching tickets quickly for tips and combos. Expired orders cost 30 points.
 Numbered customers in the queue match the ticket numbers above.
 Approach a station to identify it in the bottom prompt. Ingredient displays show what each source provides.
 A yellow station border shows your interaction target. Progress bars show cooking/chopping.
 Cooking food is visible above the pan; glowing burners and rising steam show heat.
-Brown food is ready; black food and dark smoke mean burnt. Plates sit on blue mats.
+Brown food is ready; black food and dark smoke mean burnt.
 A service lasts 3 minutes. Solo menus pause the timer; online kitchens keep running.
 
 Models: Kenney Food Kit / Furniture Kit (CC0). Audio: locally synthesized for this project.

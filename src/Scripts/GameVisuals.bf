@@ -30,7 +30,6 @@ extension Game
 		case .CrateSausage: return "SAUSAGES";
 		case .CrateTomato: return "TOMATOES";
 		case .CrateCheese: return "CHEESE";
-		case .CratePlate: return "PLATES";
 		case .ServingHatch: return "SERVE HERE";
 		case .TrashCan: return "DISCARD";
 		}
@@ -78,10 +77,10 @@ extension Game
 		}
 		let chef = Player.Local;
 		let target = chef?.FindTargetStation();
-		if (target == null) { hudNotice.Set("Find ingredients on the left. Cook at the red stoves. Assemble on blue counters. Serve at the teal hatch."); return; }
+		if (target == null) { hudNotice.Set("Find ingredients on the left. Cook at the red stoves. Assemble on wood counters. Serve at the teal hatch on the right."); return; }
 		let item = target.currentItem;
 		StringView action = "E: place / pick up";
-		if (target.kind >= .CrateBun && target.kind <= .CratePlate) action = "E: take ingredient";
+		if (target.kind >= .CrateBun && target.kind <= .CrateCheese) action = "E: take ingredient";
 		else if (target.kind == .CuttingBoard && RecipeBook.CanChop(item)) action = "HOLD F / SPACE: chop";
 		else if (target.kind == .ServingHatch) action = "E: deliver a matching ticket";
 		else if (target.kind == .TrashCan) action = "E: discard held food";

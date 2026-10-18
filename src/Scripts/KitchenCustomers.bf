@@ -44,7 +44,7 @@ public class KitchenCustomers : Component
 		mHappy[slot] = false;
 		let guest = Scene.CreateGameObject(scope $"Customer {slot + 1}");
 		guest.Transient = true;
-		guest.Transform.Position = .(9.5f + slot * 0.4f, 0, -6.0f);
+		guest.Transform.Position = .(8, 0, 7.5f + slot * 0.4f);
 		mGuests[slot] = guest;
 		Color[4] outfits = .(.(0.55f, 0.33f, 0.88f, 1), .(0.94f, 0.62f, 0.16f, 1), .(0.20f, 0.58f, 0.85f, 1), .(0.90f, 0.35f, 0.60f, 1));
 		let skin = Color(0.90f - slot * 0.09f, 0.71f - slot * 0.08f, 0.55f - slot * 0.06f, 1);
@@ -80,14 +80,14 @@ public class KitchenCustomers : Component
 				mLeaving[i] = true;
 				mHappy[i] = game.OrderOutcome(i) == 1;
 			}
-			let goal = mLeaving[i] ? Vector3(-10, 0, -6.0f) : Vector3(-2.7f + i * 1.8f, 0, -6.0f);
+			let goal = mLeaving[i] ? Vector3(8, 0, -9) : Vector3(8, 0, 3 - i * 2);
 			let delta = goal - mGuests[i].Transform.Position;
 			if (delta.Length > 0.06f)
 			{
 				let distance = Math.Min(delta.Length, dt * 2.8f);
 				mGuests[i].Transform.Position += delta.Normalized * distance;
 				mWalk[i] += dt * 12;
-				mGuests[i].Transform.Rotation = Quaternion.Euler(0, delta.x > 0 ? 90 : -90, (float)Math.Sin(mWalk[i]) * 4);
+				mGuests[i].Transform.Rotation = Quaternion.Euler(0, Math.Atan2(delta.x, delta.z) * Mathf.Rad2Deg, (float)Math.Sin(mWalk[i]) * 4);
 			}
 			else if (mLeaving[i])
 			{
@@ -97,7 +97,7 @@ public class KitchenCustomers : Component
 			}
 			else
 			{
-				mGuests[i].Transform.Rotation = .Identity;
+				mGuests[i].Transform.Rotation = Quaternion.Euler(0, -90, 0);
 			}
 		}
 	}

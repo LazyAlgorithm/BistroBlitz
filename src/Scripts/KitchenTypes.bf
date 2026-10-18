@@ -6,8 +6,7 @@ namespace BistroBlitz;
 public enum KitchenItem : int32
 {
 	None = 0,
-	Plate,
-	Bun,
+	Bun = 2,
 	RawMeat,
 	CookedMeat,
 	BurntMeat,
@@ -35,8 +34,7 @@ public enum StationKind : int32
 	CrateSausage,
 	CrateTomato,
 	CrateCheese,
-	CratePlate,
-	ServingHatch,
+	ServingHatch = 9,
 	TrashCan
 }
 
@@ -73,7 +71,6 @@ public static class RecipeBook
 		switch (item)
 		{
 		case .None: return "Empty";
-		case .Plate: return "Plate";
 		case .Bun: return "Burger Bun";
 		case .RawMeat: return "Raw Patty";
 		case .CookedMeat: return "Cooked Patty";
@@ -98,7 +95,6 @@ public static class RecipeBook
 		switch (item)
 		{
 		case .None: return "";
-		case .Plate: return "Models/plate.glb";
 		case .Bun: return "builtin:cylinder";
 		case .RawMeat: return "Models/meat-raw.glb";
 		case .CookedMeat: return "Models/meat-patty.glb";
@@ -140,7 +136,6 @@ public static class RecipeBook
 		case .CookedMeat: return 2.6f;
 		case .RawMeat, .BurntMeat: return 1.7f;
 		case .RawSausage, .CookedSausage: return 1.6f;
-		case .Plate: return 1.12f;
 		default: return 1.35f;
 		}
 	}
@@ -228,12 +223,6 @@ public static class RecipeBook
 			return true;
 		}
 
-		// Plating: Plate + Finished Dish -> Plated Dish
-		if (primary == .Plate && IsFinishedDish(secondary))
-		{
-			result = secondary;
-			return true;
-		}
 
 		return false;
 	}

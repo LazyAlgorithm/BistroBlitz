@@ -308,7 +308,7 @@ public class KitchenStation : Component
 	private static bool IsCrate(StationKind k)
 	{
 		return k == .CrateBun || k == .CrateMeat || k == .CrateSausage ||
-		       k == .CrateTomato || k == .CrateCheese || k == .CratePlate;
+		       k == .CrateTomato || k == .CrateCheese;
 	}
 
 	private static KitchenItem ItemFromCrate(StationKind k)
@@ -320,7 +320,6 @@ public class KitchenStation : Component
 		case .CrateSausage: return .RawSausage;
 		case .CrateTomato: return .Tomato;
 		case .CrateCheese: return .Cheese;
-		case .CratePlate: return .Plate;
 		default: return .None;
 		}
 	}
