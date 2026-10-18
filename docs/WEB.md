@@ -17,7 +17,7 @@ Serve the build over HTTP, rather than opening the HTML directly:
 python3 -m http.server 8080 --directory Builds/BistroBlitz-Web
 ```
 
-Open `http://localhost:8080/` on the desktop. For a phone/tablet on the same network, open the computer's LAN address on port 8080. Landscape gives the largest view. The repository page is deployed by the web workflow at `https://lazyalgorithm.github.io/BistroBlitz/`; its Play button opens the packaged game in `play/`.
+Open `http://localhost:8080/` on the desktop. For a phone/tablet on the same network, open the computer's LAN address on port 8080. Landscape gives the largest view. The repository page is deployed by the web workflow at `https://lazyalgorithm.github.io/bistro-blitz-releases/`; its Play button opens the packaged game in `play/`.
 
 Desktop browsers use WASD/arrows, E, F/Space and Escape, with no touch overlay. Only mobile browser versions show the movement stick, USE, CHOP, RUN and MENU buttons. USE picks up, places, combines or delivers; hold CHOP to prepare food; hold RUN while moving to sprint. Mobile menus and HUD use separate UI documents. Menu taps do not trigger gameplay actions, and synthetic touch mouse presses do not accidentally pick up food when chopping.
 

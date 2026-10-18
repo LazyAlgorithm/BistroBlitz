@@ -1,6 +1,6 @@
 # Bistro Blitz
 
-[Play in browser](https://lazyalgorithm.github.io/BistroBlitz/) · [Windows and Linux downloads](https://github.com/LazyAlgorithm/bistro-blitz-releases/releases)
+[Play in browser](https://lazyalgorithm.github.io/bistro-blitz-releases/) · [Windows and Linux downloads](https://github.com/LazyAlgorithm/bistro-blitz-releases/releases)
 
 A Tessera cooperative kitchen beta. Cook and assemble burgers, hot dogs and salads, serve timed orders, and build combos during a three-minute service. Numbered customers arrive, wait for their tickets, and react to service.
 

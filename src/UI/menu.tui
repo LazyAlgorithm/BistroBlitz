@@ -13,12 +13,13 @@ BLITZ</text>
     <button class="mainEntry" id="resumeEntry" onclick="OnResume">RESUME SERVICE</button>
     <button class="mainEntry" id="leaveEntry" onclick="OnLeave">LEAVE KITCHEN</button>
     <button class="mainEntry" id="inviteEntry" onclick="OnInviteFriends">INVITE FRIENDS</button>
+    <button class="mainEntry" id="shareEntry" onclick="OnShareRoom">COPY ROOM LINK</button>
     <button class="mainEntry primary" onclick="OnQuickPlay">QUICK PLAY (SOLO)</button>
     <button class="mainEntry" onclick="OnHostMenu">HOST KITCHEN</button>
     <button class="mainEntry" onclick="OnJoinMenu">JOIN KITCHEN</button>
-    <button class="mainEntry" onclick="OnFriendsMenu">STEAM CHEFS</button>
+    <button class="mainEntry" id="steamEntry" onclick="OnFriendsMenu">STEAM CHEFS</button>
     <button class="mainEntry" onclick="OnSettingsMenu">SETTINGS</button>
-    <button class="mainEntry quiet" onclick="OnQuit">QUIT</button>
+    <button class="mainEntry quiet" id="quitEntry" onclick="OnQuit">QUIT</button>
   </panel>
 
   <panel id="footerline" />

@@ -97,6 +97,7 @@ public class Game : Component
 		mHud.referenceWidth = 1920;
 		mHud.Enabled = false;
 
+		if (WebPlatform.IsWeb) address.Clear();
 		let app = Application.Instance;
 		if (app.HasArg("--self-test"))
 		{
@@ -121,10 +122,17 @@ public class Game : Component
 		{
 			OnQuickPlay();
 		}
+		else if (WebPlatform.IsWeb && WebRtc.GetCodeFromLink(arg))
+		{
+			WebPlatform.SetUrlParam("join", "");
+			address.Set(arg);
+			OnJoin();
+		}
 	}
 
 	public override void Update()
 	{
+		UpdateBrowserConnection();
 		UpdateMatch(Time.DeltaTime);
 		if (mDisplayedPhase != phase)
 		{
@@ -430,6 +438,12 @@ public class Game : Component
 
 		connectionLabel.Set(Connected ? (Authority ? "HOSTING SESSION" : scope $"CONNECTED TO {address}") : "LOCAL KITCHEN");
 		lobbySummary.Set(scope $"Chefs in kitchen: {Player.All.Count}");
+		if (WebPlatform.IsWeb && Connected)
+		{
+			let status = scope String();
+			WebRtc.GetStatus(status);
+			connectionLabel.Set(scope $"ROOM {WebRtc.RoomCode}  {status}");
+		}
 	}
 
 	private void FormatOrderSlot(int32 recipeIdx, float timeRemaining, String outText)
@@ -451,7 +465,7 @@ public class Game : Component
 		let net = new NetworkManager(Scene);
 		Scene.Network = net;
 		net.PlayerPrefab.Set("Player");
-		net.Transport = (!direct && Steam.IsReady) ? .Steam : .Direct;
+		net.Transport = WebPlatform.IsWeb ? .WebRtc : ((!direct && Steam.IsReady) ? .Steam : .Direct);
 
 		if (!net.StartServer(Port, !Application.Instance.Headless))
 		{
@@ -491,10 +505,11 @@ public class Game : Component
 			return;
 		}
 
+		if (WebPlatform.IsWeb && !PrepareRoomCode()) return;
 		let net = new NetworkManager(Scene);
 		Scene.Network = net;
 		net.PlayerPrefab.Set("Player");
-		net.Transport = (address.Length >= 16 && !address.Contains('.')) ? .Steam : .Direct;
+		net.Transport = WebPlatform.IsWeb ? .WebRtc : ((address.Length >= 16 && !address.Contains('.')) ? .Steam : .Direct);
 
 		if (!net.StartClient(address, Port))
 		{
@@ -504,6 +519,8 @@ public class Game : Component
 			return;
 		}
 
+		mBrowserConnecting = WebPlatform.IsWeb;
+		mBrowserWait = 0;
 		notice.Set("Connecting to kitchen...");
 		menu = false;
 		if (mHud != null)
@@ -514,6 +531,7 @@ public class Game : Component
 
 	public void OnLeave()
 	{
+		mBrowserConnecting = false;
 		Steam.ClearPresence();
 		GetComponent<KitchenCustomers>()?.ResetCustomers();
 		let net = Scene.Network;

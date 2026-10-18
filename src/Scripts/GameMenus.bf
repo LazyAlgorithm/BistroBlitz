@@ -61,6 +61,8 @@ extension Game
 		}
 
 		mMenu.document.Set(scope $"UI/{file}.tui");
+		if (WebPlatform.IsWeb && !MobileVersion && (page == .Host || page == .Join))
+			mMenu.document.Set(scope $"UI/web/{file}.tui");
 		mMenu.Reload();
 		UpdateMenuEntries();
 	}
@@ -68,6 +70,9 @@ extension Game
 	private void UpdateMenuEntries()
 	{
 		if (mMenu == null) return;
+		if (let entry = mMenu.Find("steamEntry")) entry.visible = !WebPlatform.IsWeb;
+		if (let entry = mMenu.Find("quitEntry")) entry.visible = !WebPlatform.IsWeb;
+		if (let entry = mMenu.Find("shareEntry")) entry.visible = WebPlatform.IsWeb && Connected && Authority;
 		if (let entry = mMenu.Find("resumeEntry")) entry.visible = phase == 1;
 		if (let entry = mMenu.Find("leaveEntry")) entry.visible = phase != 0 || Connected;
 		if (let entry = mMenu.Find("inviteEntry")) entry.visible = Connected && Scene.Network.Transport == .Steam;

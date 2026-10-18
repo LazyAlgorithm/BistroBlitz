@@ -12,10 +12,10 @@ import tempfile
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--site',type=Path,required=True)
-    parser.add_argument('--repo',default='LazyAlgorithm/BistroBlitz')
+    parser.add_argument('--repo',default='LazyAlgorithm/bistro-blitz-releases')
     parser.add_argument('--source',required=True)
     args=parser.parse_args()
-    if args.repo!='LazyAlgorithm/BistroBlitz':parser.error('Unexpected Pages repository')
+    if args.repo!='LazyAlgorithm/bistro-blitz-releases':parser.error('Unexpected Pages repository')
     if not os.environ.get('GH_TOKEN'):parser.error('HUB_RELEASE_TOKEN is required to publish Pages')
     site=args.site.resolve()
     for name in ('index.html','play/index.html','play/BistroBlitz.wasm','play/game.tpak'):
@@ -57,7 +57,7 @@ def main():
         current=api('POST',desired)
     if current.get('build_type')!='legacy' or current.get('source')!={'branch':'gh-pages','path':'/'}:
         current=api('PUT',desired)
-    print('Pages published from gh-pages:',current.get('html_url','https://lazyalgorithm.github.io/BistroBlitz/'))
+    print('Pages published from gh-pages:',current.get('html_url','https://lazyalgorithm.github.io/bistro-blitz-releases/'))
 
 
 if __name__=='__main__':main()

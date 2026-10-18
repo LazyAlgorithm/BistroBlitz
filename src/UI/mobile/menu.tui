@@ -5,6 +5,9 @@
   <button id="resumeEntry" onclick="OnResume">RESUME</button>
   <button id="leaveEntry" onclick="OnLeave">LEAVE KITCHEN</button>
   <button class="primary" onclick="OnQuickPlay">PLAY SOLO</button>
+  <button id="shareEntry" onclick="OnShareRoom">SHARE ROOM LINK</button>
+  <button onclick="OnHostMenu">HOST KITCHEN</button>
+  <button onclick="OnJoinMenu">JOIN KITCHEN</button>
   <button onclick="OnSettingsMenu">SETTINGS</button>
  </panel>
  <text id="notice" bind="notice" />
