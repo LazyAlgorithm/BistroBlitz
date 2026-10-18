@@ -7,6 +7,8 @@ from pathlib import Path
 import shutil
 import subprocess
 import tempfile
+import time
+import urllib.request
 
 
 def main():
@@ -25,7 +27,19 @@ def main():
         command=['gh','api',f'repos/{args.repo}/pages','--method',method]
         if payload is not None:command+=['--input','-']
         result=subprocess.run(command,input=json.dumps(payload) if payload is not None else None,text=True,capture_output=True,env=environment)
-        if result.returncode:raise RuntimeError(result.stderr)
+        if result.returncode:
+            # Pages creation can succeed while gh fails to decode its empty response.
+            # Confirm the resulting state instead of reporting a failed deployment.
+            if method in ('POST', 'PUT') and 'unexpected end of JSON input' in result.stderr:
+                for attempt in range(6):
+                    time.sleep(2)
+                    try:
+                        confirmed = api('GET')
+                        if all(confirmed.get(key) == value for key, value in payload.items()):
+                            return confirmed
+                    except RuntimeError:
+                        pass
+            raise RuntimeError(result.stderr)
         return json.loads(result.stdout) if result.stdout.strip() else {}
     with tempfile.TemporaryDirectory(prefix='bistro-pages-') as temporary:
         folder=Path(temporary)
@@ -57,7 +71,29 @@ def main():
         current=api('POST',desired)
     if current.get('build_type')!='legacy' or current.get('source')!={'branch':'gh-pages','path':'/'}:
         current=api('PUT',desired)
-    print('Pages published from gh-pages:',current.get('html_url','https://lazyalgorithm.github.io/BistroBlitz/'))
+    url=current.get('html_url','https://lazyalgorithm.github.io/BistroBlitz/')
+    print('Pages configured from gh-pages:',url,flush=True)
+    # Check the deployed version, not an older successful page in the CDN.
+    deadline=time.monotonic()+240
+    last_error='Pages deployment is pending'
+    while time.monotonic()<deadline:
+        try:
+            with urllib.request.urlopen(url+'build-info.json?source='+args.source,timeout=15) as response:
+                deployed=json.load(response)
+            if deployed.get('game_source')!=args.source:
+                raise RuntimeError('Pages is still serving the previous build')
+            for path in ('index.html','play/index.html','play/BistroBlitz.js','play/game.tpak'):
+                with urllib.request.urlopen(url+path,timeout=15) as response:
+                    if response.status!=200 or not response.read(16):
+                        raise RuntimeError('Missing published file: '+path)
+            with urllib.request.urlopen(url+'play/BistroBlitz.wasm',timeout=15) as response:
+                if response.read(4)!=b'\0asm':raise RuntimeError('Invalid published WebAssembly')
+            print('Live web build verified:',url+'play/',flush=True)
+            return
+        except (OSError,ValueError,RuntimeError) as error:
+            last_error=str(error)
+            time.sleep(10)
+    raise RuntimeError('Could not verify the live web build: '+last_error)
 
 
 if __name__=='__main__':main()
