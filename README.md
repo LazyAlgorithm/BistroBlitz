@@ -9,3 +9,5 @@ WASD/arrows move; Shift sprints; E picks up/places; hold F or Space to chop; Esc
 `./run.sh --headless --self-test --frames 5` compiles and checks kitchen gameplay and all UI documents. See [STATUS.md](STATUS.md) for validation limits and remaining work.
 
 Source belongs in private `LazyAlgorithm/BistroBlitz`. The release workflow builds Windows/Linux using the pinned Tessera release, runs packaged checks, stages ZIPs privately, publishes runtime-only packages to `LazyAlgorithm/bistro-blitz-releases`, and updates Tessera Hub. See [release setup](docs/RELEASING.md).
+
+For a browser build, run `./tools/build_web.sh --setup`. Touch controls appear only on mobile browsers; desktop web uses keyboard/mouse. See [web build instructions and current validation limits](docs/WEB.md).

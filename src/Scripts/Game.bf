@@ -76,6 +76,8 @@ public class Game : Component
 		if (Instance == this)
 			Instance = null;
 		Steam.ClearPresence();
+		TouchControls.Shown = false;
+		TouchControls.Clear();
 	}
 
 	public override void Start()
@@ -84,6 +86,7 @@ public class Game : Component
 			camera = Scene.FindComponent<Camera>();
 
 		mMenu = GetComponent<UIDocument>();
+		InitializeTouchControls();
 		InitializeMenus();
 		InitializeAudio();
 		GameObject.AddComponent<KitchenCustomers>();
@@ -134,6 +137,7 @@ public class Game : Component
 		UpdateAudio();
 		MenuAudio();
 		UpdateFriendBrowser();
+		UpdateTouchControls();
 
 		if (Input.GetKeyDown(.Escape))
 		{

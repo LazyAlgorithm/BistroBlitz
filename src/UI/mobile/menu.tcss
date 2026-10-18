@@ -1,0 +1,12 @@
+#screen { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background-color: #10202bf4 }
+#heading { position: absolute; left: 32; top: 28; right: 32; height: 64; font-size: 46; color: #ffe8b9 }
+#description { position: absolute; left: 32; top: 100; right: 32; width: auto; height: 64; font-size: 25; white-space: normal; color: #c8d8df }
+#mainEntries { position: absolute; left: 32; right: 32; top: 180; width: auto; gap: 16 }
+button { width: 100%; height: 70; padding: 16 24; font-size: 30; color: #fff9ed; background-color: #284657; border-radius: 8 }
+button:hover { background-color: #3d6579 }
+.primary { background-color: #d45b2f }
+.label { font-size: 24; height: 30; color: #dce9eb }
+.slider { width: 100%; height: 44; background-color: #2d5364; color: #ffcf76 }
+.value { font-size: 30; height: 48; color: #ffcf76; white-space: normal }
+.detail { font-size: 26; height: 78; color: #dce9eb; white-space: normal }
+#notice { position: absolute; left: 32; right: 32; bottom: 24; height: 54; font-size: 24; color: #ffcf76; white-space: normal }

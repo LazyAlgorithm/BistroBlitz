@@ -54,7 +54,7 @@ for x in range(-8,9):
 for name,pos,scale in [('North',(0,.3,6.8),(18,.6,.3)),('South',(0,.3,-6.8),(18,.6,.3)),('West',(-8.8,.3,0),(.3,.6,14)),('East',(8.8,.3,0),(.3,.6,14))]:
  mesh('Low '+name+' wall',pos,scale,(.25,.42,.47,1));component('Tessera.BoxCollider',size=(1,1,1))
 # Uniform station roots keep physics, interaction distance and item heights consistent.
-stations=[('STOVE',-2,4.5,2),('STOVE',0,4.5,2),('STOVE',2,4.5,2),('BUN',-7,3.5,3),('PATTY',-7,2,4),('SAUSAGE',-7,.5,5),('TOMATO',-7,-1,6),('CHEESE',-7,-2.5,7),('ASSEMBLE',-3,0,0),('CHOP',-1,0,1),('CHOP',1,0,1),('ASSEMBLE',3,0,0),('ASSEMBLE',6.5,2,0),('SERVE',6.5,-2,9),('ASSEMBLE',6.5,0,0),('TRASH',4.5,-4.5,10)]
+stations=[('STOVE',-2,4.5,2),('STOVE',0,4.5,2),('STOVE',2,4.5,2),('BUN',-7,3.5,3),('PATTY',-7,2,4),('SAUSAGE',-7,.5,5),('TOMATO',-7,-1,6),('CHEESE',-7,-2.5,7),('ASSEMBLE',-3,0,0),('CHOP',-1,0,1),('CHOP',1,0,1),('ASSEMBLE',3,0,0),('ASSEMBLE',-2,-4.5,0),('SERVE',6.5,-2,9),('ASSEMBLE',2,-4.5,0),('TRASH',4.5,-4.5,10)]
 colors={0:(.20,.56,.68,1),1:(.19,.65,.43,1),2:(.90,.29,.16,1),3:(.94,.65,.21,1),4:(.83,.34,.42,1),5:(.69,.37,.20,1),6:(.88,.20,.19,1),7:(.96,.74,.15,1),9:(.12,.70,.61,1),10:(.30,.34,.43,1)}
 foods={3:('builtin:cylinder',(.58,.2,.58)),4:('Models/meat-raw.glb',(1.25,1.25,1.25)),5:('Models/hot-dog-raw.glb',(1.3,1.3,1.3)),6:('Models/tomato.glb',(3.8,3.8,3.8)),7:('Models/cheese.glb',(1.7,1.7,1.7))}
 for name,x,z,kind in stations:

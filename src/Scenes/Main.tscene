@@ -3942,7 +3942,7 @@ field color 1 1 1 1
 field roughness 0.85
 
 object 349 parent 0 active 1 name "ASSEMBLE"
-transform 6.5 0 2 0 0 0 1 1 1 1
+transform -2 0 -4.5 0 0 0 1 1 1 1
 
 component Tessera.NetworkIdentity enabled 1
 
@@ -4225,7 +4225,7 @@ field color 1 0.88 0.3 1
 field roughness 0.85
 
 object 374 parent 0 active 1 name "ASSEMBLE"
-transform 6.5 0 0 0 0 0 1 1 1 1
+transform 2 0 -4.5 0 0 0 1 1 1 1
 
 component Tessera.NetworkIdentity enabled 1
 

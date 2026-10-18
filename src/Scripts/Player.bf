@@ -63,13 +63,13 @@ public class Player : NetworkScript
 		}
 
 		// Pick up or place with E; hold F or Space to chop.
-		if (Input.GetKey(.E) || Input.GetMouseButton(0))
+		if (Input.GetKey(.E) || (!TouchControls.Active && Input.GetMouseButton(0)))
 		{
 			input.SetButton((int32)InputButton.Use, true);
 		}
 
 		// Space or F or Right Click can chop
-		if (Input.GetKey(.F) || Input.GetKey(.Space) || Input.GetMouseButton(1))
+		if (Input.GetKey(.F) || Input.GetKey(.Space) || (!TouchControls.Active && Input.GetMouseButton(1)))
 		{
 			input.SetButton((int32)InputButton.Ability1, true);
 		}

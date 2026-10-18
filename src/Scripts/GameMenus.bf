@@ -38,6 +38,7 @@ extension Game
 
 	public void OpenPage(MenuPage page)
 	{
+		TouchControls.Shown = false;
 		mPage = page;
 		menu = true;
 

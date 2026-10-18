@@ -1,0 +1,129 @@
+name: Build BistroBlitz Web
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  TESSERA_REF: main
+  # Production rebuild after restoring the responsive UI checkpoint.
+  BEEF_COMMIT: b62833e327d6b08f3566b31102c57646de6916b0
+  LLVM_VERSION: '22'
+  EMSCRIPTEN_VERSION: '4.0.23'
+  NATIVE_TARGETS: tessera_native bgfx bimg bimg_decode bx SDL3-static joltc Jolt enet
+
+jobs:
+  web:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 90
+    concurrency:
+      group: bistroblitz-web-build
+      cancel-in-progress: false
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Get BistroBlitz
+        uses: actions/checkout@v4
+        with:
+          path: bistroblitz
+
+      - name: Get Tessera
+        uses: actions/checkout@v4
+        with:
+          repository: LazyAlgorithm/Tessera
+          ref: ${{ env.TESSERA_REF }}
+          path: tessera
+
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build tools and Beef
+        uses: ./bistroblitz/.github/actions/beef-linux
+        with:
+          beef-commit: ${{ env.BEEF_COMMIT }}
+          llvm-version: ${{ env.LLVM_VERSION }}
+
+      - name: Get matching Beef runtime sources
+        uses: actions/checkout@v4
+        with:
+          repository: beefytech/Beef
+          ref: ${{ env.BEEF_COMMIT }}
+          path: beef-runtime
+
+      - name: Provide sources for the WebAssembly runtime
+        run: |
+          cp -a beef-runtime/wasm "$HOME/beef/"
+          cp -a beef-runtime/BeefRT "$HOME/beef/"
+          cp -a beef-runtime/BeefySysLib "$HOME/beef/"
+
+      - name: Cache Emscripten
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/tessera-web
+          key: tessera-web-${{ env.EMSCRIPTEN_VERSION }}
+
+      # Beef's WebAssembly runtime, built by tools/web/setup.sh beside the Linux compiler.
+      - name: Cache Beef's WebAssembly runtime
+        id: wasm-rt
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/beef/IDE/dist/*_wasm*.a
+          key: beef-wasm-${{ env.BEEF_COMMIT }}-em${{ env.EMSCRIPTEN_VERSION }}
+
+      - name: Native library cache key
+        id: native-key
+        run: echo "key=$(tessera/.github/scripts/native-deps.sh key web)-em${EMSCRIPTEN_VERSION}-bistroblitz-path-v1" >> "$GITHUB_OUTPUT"
+
+      - name: Cache the native libraries
+        id: native-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: tessera/build/native-web
+          key: ${{ steps.native-key.outputs.key }}
+
+      - name: Emscripten and native libraries
+        run: |
+          [ "${{ steps.native-cache.outputs.cache-hit }}" = "true" ] && tessera/.github/scripts/native-deps.sh settle
+          cd tessera
+          PATH="$(dirname "$BEEFBUILD"):$PATH" tools/web/setup.sh
+
+      - name: Keep Beef's WebAssembly runtime
+        if: steps.wasm-rt.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ~/beef/IDE/dist/*_wasm*.a
+          key: beef-wasm-${{ env.BEEF_COMMIT }}-em${{ env.EMSCRIPTEN_VERSION }}
+
+      - name: Keep the native libraries
+        if: steps.native-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: tessera/build/native-web
+          key: ${{ steps.native-key.outputs.key }}
+
+      - name: Build
+        run: |
+          export PATH="$HOME/.local/share/tessera-web/emsdk/upstream/emscripten:$PATH"
+          cd tessera
+          python3 tools/build_player.py ../bistroblitz --platform web --output ../out/BistroBlitz-Web
+          python3 ../bistroblitz/tools/validate_web.py ../out/BistroBlitz-Web
+          cd ../out && rm -f BistroBlitz-Web/log.txt && zip -qr9 BistroBlitz-Web.zip BistroBlitz-Web
+
+      - name: Keep the zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: BistroBlitz-Web
+          path: out/BistroBlitz-Web.zip
+
+      - name: Validate browser build
+        run: |
+          test -s out/BistroBlitz-Web/index.html
+          test -s out/BistroBlitz-Web/BistroBlitz.js
+          test -s out/BistroBlitz-Web/BistroBlitz.wasm
+          test -s out/BistroBlitz-Web/game.tpak
+

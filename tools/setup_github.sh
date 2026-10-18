@@ -19,12 +19,13 @@ if ! git remote get-url origin >/dev/null 2>&1; then
   git remote add origin https://github.com/LazyAlgorithm/BistroBlitz.git
 fi
 test "$(git remote get-url origin)" = https://github.com/LazyAlgorithm/BistroBlitz.git
-if ! git rev-parse --verify HEAD >/dev/null 2>&1; then
-  git add .
-  git commit -m 'Implement Bistro Blitz kitchen beta and tested Hub release pipeline'
+git add .
+if ! git diff --cached --quiet; then
+  git commit -m 'Update Bistro Blitz game and build pipelines'
 fi
 # First verify this credential can update the existing Hub; publishing uses the same account conventions as other games.
 gh api repos/LazyAlgorithm/tessera-hub --jq .permissions.push | grep -Fx true
 gh auth token | gh secret set HUB_RELEASE_TOKEN --repo LazyAlgorithm/BistroBlitz
 git push -u origin main
+gh workflow run web-build.yml --repo LazyAlgorithm/BistroBlitz --ref main
 printf '%s\n' 'Source pushed. The Windows/Linux workflow publishes validated packages, then adds the game to the Hub.'

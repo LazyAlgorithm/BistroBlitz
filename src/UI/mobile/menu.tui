@@ -1,0 +1,11 @@
+<panel id="screen">
+ <text id="heading">BISTRO BLITZ</text>
+ <text id="description">Cook, assemble, then serve customers at the teal hatch on the right.</text>
+ <panel id="mainEntries">
+  <button id="resumeEntry" onclick="OnResume">RESUME</button>
+  <button id="leaveEntry" onclick="OnLeave">LEAVE KITCHEN</button>
+  <button class="primary" onclick="OnQuickPlay">PLAY SOLO</button>
+  <button onclick="OnSettingsMenu">SETTINGS</button>
+ </panel>
+ <text id="notice" bind="notice" />
+</panel>

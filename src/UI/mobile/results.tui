@@ -1,0 +1,10 @@
+<panel id="screen">
+ <text id="heading" bind="resultsTitle" />
+ <panel id="mainEntries" class="surface">
+  <text class="value" bind="resultsStars" />
+  <text class="value" bind="resultsScore" />
+  <text class="detail" bind="resultsDetail" />
+  <button class="primary" onclick="OnRestartGame">COOK AGAIN</button>
+  <button onclick="OnLeave">MAIN MENU</button>
+ </panel>
+</panel>

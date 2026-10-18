@@ -1,0 +1,13 @@
+<panel id="screen">
+ <text id="heading">SETTINGS</text>
+ <panel id="mainEntries" class="surface">
+  <text class="label">MASTER VOLUME</text>
+  <slider class="slider" bind="masterVolume" min="0" max="1" onchange="OnMasterVolume" />
+  <text class="label">MUSIC</text>
+  <slider class="slider" bind="musicVolume" min="0" max="1" onchange="OnMusicVolume" />
+  <text class="label">EFFECTS</text>
+  <slider class="slider" bind="effectsVolume" min="0" max="1" onchange="OnEffectsVolume" />
+  <button onclick="OnFullscreen">FULLSCREEN</button>
+  <button onclick="OnBack">BACK</button>
+ </panel>
+</panel>

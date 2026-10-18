@@ -8,7 +8,8 @@ extension Game
 	// Deterministic integration checks against the loaded scene and real station handlers.
 	private void RunKitchenTests()
 	{
-		for (let page in StringView[]("menu", "host", "join", "friends", "settings", "hud", "results"))
+		RunTouchTests();
+		for (let page in StringView[]("menu", "host", "join", "friends", "settings", "hud", "results", "mobile/menu", "mobile/settings", "mobile/results", "mobile/hud"))
 		{
 			let document = scope UIDocumentData();
 			let path = scope String();
@@ -91,7 +92,7 @@ extension Game
 		StartMatch();
 		Runtime.Assert(Player.All.Count == 1);
 		Runtime.Assert(phase == 1 && score == 0 && stove.currentItem == .None && board.currentItem == .None);
-		Console.WriteLine("BistroBlitz integration checks passed: crates, cooking, assembly, serving, chopping, burning, expiry, results, restart, customer arrivals/departures, UI documents, camera framing, decoded food palette.");
+		Console.WriteLine("BistroBlitz integration checks passed: crates, cooking, assembly, serving, chopping, burning, expiry, results, restart, customer arrivals/departures, UI documents, camera framing, decoded food palette, mobile control ownership/multitouch/layouts.");
 		Application.Instance.Running = false;
 	}
 }

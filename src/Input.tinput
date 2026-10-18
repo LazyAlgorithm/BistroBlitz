@@ -1,0 +1,19 @@
+map Player
+action Move vector
+bind keys W S A D
+bind keys UpArrow DownArrow LeftArrow RightArrow
+bind stick left
+bind touch Move
+action Use button
+bind key E
+bind pad North
+bind touch Use
+action Ability1 button
+bind key F
+bind key Space
+bind pad South
+bind touch Chop
+action Sprint button
+bind key LeftShift
+bind pad LeftShoulder
+bind touch Sprint
