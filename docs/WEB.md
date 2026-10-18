@@ -17,11 +17,11 @@ Serve the build over HTTP, rather than opening the HTML directly:
 python3 -m http.server 8080 --directory Builds/BistroBlitz-Web
 ```
 
-Open `http://localhost:8080/` on the desktop. For a phone/tablet on the same network, open the computer's LAN address on port 8080. Landscape gives the largest view. The repository page is deployed by the web workflow at `https://lazyalgorithm.github.io/bistro-blitz-releases/`; its Play button opens the packaged game in `play/`.
+Open `http://localhost:8080/` on the desktop. For a phone/tablet on the same network, open the computer's LAN address on port 8080. Landscape gives the largest view. The repository page is deployed by the web workflow at `https://lazyalgorithm.github.io/BistroBlitz/`; its Play button opens the packaged game in `play/`.
 
 Desktop browsers use WASD/arrows, E, F/Space and Escape, with no touch overlay. Only mobile browser versions show the movement stick, USE, CHOP, RUN and MENU buttons. USE picks up, places, combines or delivers; hold CHOP to prepare food; hold RUN while moving to sprint. Mobile menus and HUD use separate UI documents. Menu taps do not trigger gameplay actions, and synthetic touch mouse presses do not accidentally pick up food when chopping.
 
-The `web-build.yml` GitHub Actions workflow builds and validates the `BistroBlitz-Web` player using the same toolchain setup as Polystrike. It stages `docs/index.html` as the landing page and the validated player under `play/`, then commits that runtime-only site to the repository’s `gh-pages` branch and enables branch-based GitHub Pages. This avoids GitHub Actions artifact storage, whose account quota blocked the first deployment. Source stays in the private repository. The workflow runs on game/build/page changes on main and supports manual dispatch. The existing Hub workflow still publishes the standalone Windows/Linux players and updates the Hub only after their packaged checks pass.
+The `web-build.yml` GitHub Actions workflow builds and validates the `BistroBlitz-Web` player using the same toolchain setup as Polystrike. It stages `docs/index.html` as the landing page and the validated player under `play/`, then commits that runtime-only site to the repository’s `gh-pages` branch and enables branch-based GitHub Pages. This avoids GitHub Actions artifact storage, whose account quota blocked the first deployment. The user made the game repository public so it can host Pages directly. The workflow runs on game/build/page changes on main and supports manual dispatch. The existing Hub workflow still publishes the standalone Windows/Linux players and updates the Hub only after their packaged checks pass.
 
 ## Current validation
 

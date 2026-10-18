@@ -39,10 +39,12 @@ Visual/audio playtesting remains pending: `xdpyinfo` works in the user's desktop
 
 Private source is published to `LazyAlgorithm/BistroBlitz`. The first Hub release workflow completed successfully: both Windows and Linux standalone packages passed checks and are published to `LazyAlgorithm/bistro-blitz-releases` under tag `bistro-blitz-2026.10.18-065644-ea0c500`. The live `LazyAlgorithm/tessera-hub` catalog contains BistroBlitz with both platform assets and launch paths.
 
-The repository landing page and Pages deployment are in the web workflow. The initial web compile passed but Actions artifact quota blocked upload; deployment now publishes a runtime-only `gh-pages` branch. Expected page: `https://lazyalgorithm.github.io/bistro-blitz-releases/`. The page links to the browser game and resolves current Windows/Linux release assets, including beta releases. Pages deployment must succeed before the browser link is considered live.
+The repository landing page and Pages deployment are in the web workflow. The initial web compile passed but Actions artifact quota blocked upload; deployment now publishes a runtime-only `gh-pages` branch. Expected page: `https://lazyalgorithm.github.io/BistroBlitz/`. The page links to the browser game and resolves current Windows/Linux release assets, including beta releases. Pages deployment must succeed before the browser link is considered live.
 
 Hub artwork is published under `bistro-blitz-releases/artwork/` and linked in the live catalog. The local cached list was missing BistroBlitz; it is repaired, and the Hub’s catalog refresh now requests a fresh URL (Hub commit `3573deb`).
 
 The shell still cannot resolve GitHub, but the connected GitHub tools can read/write the repositories. See `docs/WEB.md` and `docs/RELEASING.md`.
 
 Browser multiplayer now explicitly selects WebRTC, accepts room codes or invitation links, automatically joins shared URLs, supports sharing from the pause menu, and reports connection timeouts. Steam friends remain desktop-only. Native integration and local WebAssembly packaging pass. Private-repository Pages was rejected by the account plan (HTTP 422); publication now targets the existing public runtime repository, preserving private source. Live two-browser multiplayer remains untested.
+
+The user made BistroBlitz public; Pages deployment now targets BistroBlitz itself at the user’s request.

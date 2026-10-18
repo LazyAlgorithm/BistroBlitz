@@ -124,4 +124,4 @@ jobs:
       - name: Publish repository Pages branch
         env:
           GH_TOKEN: ${{ secrets.HUB_RELEASE_TOKEN }}
-        run: python3 bistroblitz/tools/publish_pages.py --site site --repo LazyAlgorithm/bistro-blitz-releases --source "$GITHUB_SHA"
+        run: python3 bistroblitz/tools/publish_pages.py --site site --repo "$GITHUB_REPOSITORY" --source "$GITHUB_SHA"
