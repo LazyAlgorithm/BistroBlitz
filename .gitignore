@@ -6,3 +6,6 @@ Validation/*.log
 __pycache__/
 *.pyc
 core
+
+# Original imagegen PNGs stay locally; optimized production artwork is versioned.
+Art/Branding/*.png

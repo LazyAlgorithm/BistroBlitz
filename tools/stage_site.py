@@ -34,6 +34,10 @@ def main():
         args.output.mkdir(parents=True,exist_ok=True)
         shutil.copytree(package,args.output/'play')
         shutil.copy2(ROOT/'docs/index.html',args.output/'index.html')
+        artwork=args.output/'artwork'
+        artwork.mkdir()
+        for name in ('hub-cover.jpg','hub-icon.jpg'):
+            shutil.copy2(ROOT/'Art/Branding'/name,artwork/name)
         (args.output/'.nojekyll').write_text('')
         print('Pages site staged at',args.output)
 

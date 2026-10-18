@@ -118,44 +118,10 @@ jobs:
           python3 ../bistroblitz/tools/validate_web.py ../out/BistroBlitz-Web
           cd ../out && rm -f BistroBlitz-Web/log.txt && zip -qr9 BistroBlitz-Web.zip BistroBlitz-Web
 
-      - name: Keep the zip
-        uses: actions/upload-artifact@v4
-        with:
-          name: BistroBlitz-Web
-          path: out/BistroBlitz-Web.zip
+      - name: Stage the repository game page
+        run: python3 bistroblitz/tools/stage_site.py --package out/BistroBlitz-Web --output site
 
-      - name: Validate browser build
-        run: |
-          test -s out/BistroBlitz-Web/index.html
-          test -s out/BistroBlitz-Web/BistroBlitz.js
-          test -s out/BistroBlitz-Web/BistroBlitz.wasm
-          test -s out/BistroBlitz-Web/game.tpak
-
-  pages:
-    needs: web
-    runs-on: ubuntu-22.04
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
-    concurrency:
-      group: bistroblitz-pages-deploy
-      cancel-in-progress: false
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
-        with:
-          name: BistroBlitz-Web
-          path: package
-      - name: Prepare game page
-        run: |
-          python3 tools/stage_site.py --archive package/BistroBlitz-Web.zip --output site
-      - uses: actions/configure-pages@v5
-        with:
-          enablement: true
-          token: ${{ secrets.HUB_RELEASE_TOKEN || github.token }}
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: site
-      - name: Publish game page
-        id: deploy
-        uses: actions/deploy-pages@v4
+      - name: Publish repository Pages branch
+        env:
+          GH_TOKEN: ${{ secrets.HUB_RELEASE_TOKEN }}
+        run: python3 bistroblitz/tools/publish_pages.py --site site --repo "$GITHUB_REPOSITORY" --source "$GITHUB_SHA"
